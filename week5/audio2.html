@@ -1,0 +1,30 @@
+<!DOCTYPE html public>
+<html lang="en">
+	<head>
+		<meta  charset="utf-8" />
+		<title>
+			Contoh Audio di HTML
+		</title>
+	</head>
+	<body>
+		<h1>
+			Contoh Audio di HTML
+		</h1>
+		<audio hidden autoplay loop>
+			<source src="./audio.wav" type="audio/wav"/>
+			Browser does not supported audio tag, upgrade your browser!
+		</audio>
+		<h3 style="font-weight: normal;">Karena ada kebijakan developer browser untuk tidak bisa melakukan autoplay audio pada umumnya, maka saya gunakan cara manually, meminta para client untuk mengeclick body html nya, maka suara nya keluar dengan sendirinya. hehehe</h3>
+		<pre>
+			// auto dengan menggunakan command line supaya enable autoplay
+			// <a href="https://developer.chrome.com/blog/autoplay/">references https://developer.chrome.com/blog/autoplay/</a>
+			google-chrome --autoplay-policy=no-user-gesture-required week5/audio2.html
+		</pre>
+		<script>
+		    document.body.addEventListener("click", e => {
+		    	document.querySelector("audio").play();
+		    	return true;
+		    }, true);
+		</script>
+	</body>
+</html>

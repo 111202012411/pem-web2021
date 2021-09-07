@@ -1,0 +1,192 @@
+<!DOCTYPE html public>
+<html lang="en">
+    <head>
+        <meta  charset="utf-8" />
+        <title>
+            Contoh Video di HTML
+        </title>
+        <style>
+            html, body {
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+            video {
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
+                object-fit: cover;
+            }
+            span {
+                display: flex;
+                position: fixed;
+                width: 100vw;
+                height: 96px;
+                bottom: 0;
+                text-align: center;
+                align-items: flex-end;
+                justify-content: center;
+                font-size: 48px;
+                color: white;
+                text-shadow: 2px 2px black;
+                -webkit-box-shadow: inset 0 -92px 48px -48px #000000;
+                z-index: 4;
+            }
+        </style>
+    </head>
+    <body>
+        <video autoplay muted loop width="100%" height="100%">
+            <source src="./video.webm" type="video/webm" />
+            <source src="./video.mp4" type="video/mp4" />
+            <track src="./video.vtt" kind="subtitles" scrlang="en" label="lake"/>
+        </video>
+<pre style="display: none;">
+WEBVTT
+
+0
+00:00:00.000 --> 00:00:03.000
+Lake
+
+1
+00:00:04.000 --> 00:00:07.000
+Lake Lake
+
+2
+00:00:08.000 --> 00:00:12.000
+Lake Lake Lake
+
+3
+00:00:13.000 --> 00:00:16.000
+Lake Lake Lake Lake
+
+4
+00:00:17.000 --> 00:00:20.000
+Lake Lake Lake Lake Lake
+
+5
+00:00:21.000 --> 00:00:24.000
+Lake Lake Lake Lake Lake Lake
+
+6
+00:00:25.000 --> 00:00:28.000
+This is Lake Dude!
+
+7
+00:00:29.000 --> 00:00:32.000
+This is Lake Dude!
+
+8
+00:00:33.000 --> 00:00:36.000
+This is Lake Dude!
+</pre>
+        <script>
+            video = document.querySelector("video");
+            video.addEventListener("canplay", e => { 
+                video.play(); 
+                return true; 
+            }, true)
+            
+            // video.addEventListener("change", e => { console.log(e); return true; }, true)
+            // video.addEventListener("durationchange", e => { console.log(e); return true; }, true)
+            // video.addEventListener("loadstart", e => { console.log(e); return true; }, true)
+            // video.addEventListener("play", e => { console.log(e); return true; }, true)
+            // video.addEventListener("playing", e => { console.log(e); return true; }, true)
+            // video.addEventListener("progress", e => { console.log(e); return true; }, true)
+            
+            // video.addEventListener("timeupdate", e => { console.log(e); return true; }, true)
+            
+            span = document.createElement("span");
+            span.textContent = "...";
+            pre = document.querySelector("pre");
+            vtt = pre.textContent.split('\n');
+
+            function parseTime (context) {
+                times = context.split(':');
+                hours = Number(times.shift());
+                minutes = Number(times.shift());
+                
+                seconds = times.shift().split('.');
+                
+                milliseconds = Number(seconds[1]);
+                seconds = Number(seconds[0]);
+
+                timestamp = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
+                
+                return {
+                    "hours": hours,
+                    "minutes": minutes,
+                    "seconds": seconds,
+                    "milliseconds": milliseconds,
+                    "timestamp": timestamp
+                };
+            }
+
+            function queueSubtitlePerText (data) { // data as array [start, end], text
+                video.addEventListener("timeupdate", e => { 
+                    time = e.target.currentTime;
+                    time = time.toFixed(3).split('.');
+                    seconds = Number(time.shift());
+                    milliseconds = Number(time.shift());
+                    timestamp = (seconds * 1000) + milliseconds;
+                    if (data[0][0].timestamp <= timestamp) {
+                        span.textContent = data[1];
+                        if (timestamp >= data[0][1].timestamp) {
+                            // continue;
+                        }
+                    }
+                    return true;
+                }, true)
+            }
+
+            i = -1;
+            c = 0;
+            t = [];
+
+            if (vtt.shift() == "WEBVTT") {
+                while (true) {
+                    if (vtt.length > 0) {
+                        context = vtt.shift();
+
+                        // count 
+                        if (context.match(/^[0-9]$/i)) {
+                            count = Number(context);
+                            if (count > i) {
+                                i = count;
+                                if (t.length > 1) {
+                                    queueSubtitlePerText(t);
+                                };
+                                t = [];
+                                c = 2;
+                            }
+                            continue;
+                        }
+
+                        if (c > 0) {
+                            if (c == 2) {
+                                t.push(context.split(" --> ").map(parseTime));
+                            }
+                            if (c == 1) {
+                                t.push(context);
+                            }
+                        }
+                        
+                        if (c > 0) c--;
+
+                        
+
+                    } else {
+                        break;
+                    }
+                }
+            };
+
+            document.body.append(span);
+        </script>
+    </body>
+</html>

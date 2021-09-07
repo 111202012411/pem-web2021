@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+google-chrome --app=file:///home/skulluglify/Desktop/Kulino/PBW/pem-web2021/week5/video-subtitle.html
