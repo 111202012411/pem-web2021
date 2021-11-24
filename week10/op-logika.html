@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Operator Perbandingan</title>
+	</head>
+	<body>
+		<script>
+			var a = 20;
+			var b = 19;
+
+			var hasil;
+
+			var truth = a > b;
+			var wrong = b > a;
+
+			hasil = truth && wrong;
+			document.write(`${truth} && ${wrong} = ${hasil} <br/>`);
+
+			hasil = truth || wrong;
+			document.write(`${truth} || ${wrong} = ${hasil} <br/>`);
+
+			hasil = !truth;
+			document.write(`\!${truth} = ${hasil} <br/>`);
+		</script>
+	</body>
+</html>

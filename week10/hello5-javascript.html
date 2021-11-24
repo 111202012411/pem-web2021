@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Learn Javascript</title>
+	</head>
+	<body>
+		<h1>Tutorial Javascript for Beginners</h1>
+		<div id="out"></div>
+		<script src="ex.js" type="text/javascript"></script>
+		<script>
+			var out = document.getElementById("out");
+			var message = document.createElement("p");
+			message.textContent = name;
+			out.appendChild(message);
+
+			var visitorCount = 1000;
+			var isActive = true;
+			var url = "http://duckduckgo.com";
+
+			alert(`Selamat Datang di Rumah ${name}`);
+
+			function say(text) {
+
+				var saye = document.createElement("span");
+				var endline = document.createElement("br");
+				document.body.append(saye);
+				document.body.append(endline);
+				saye.textContent = text;
+				return saye;
+			}
+
+			say(`Nama Saya ${name}`)
+			say(`Jumlah Korban ${visitorCount}`)
+			say(`Status ${isActive}`)
+			say(`search something!  ${url}`)
+		</script>
+	</body>
+</html>
