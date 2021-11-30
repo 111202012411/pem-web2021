@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>Perulangan For</title>
+</head>
+<body>
+ <script>
+var languages = ["Javascript", "HTML", "CSS", "Typescript"];
+for(i = 0; i < languages.length; i++){
+document.write(i+". "+ languages[i] + "<br/>");
+}
+for(let i of languages){
+document.write(". "+ i + "<br/>");
+}
+languages.forEach((v, i) => {	
+document.write(i+". "+ v + "<br/>");
+})
+ </script>
+</body>
+</html>
