@@ -1,0 +1,3 @@
+[submodule "UAS/jessie"]
+	path = UAS/jessie
+	url = https://github.com/skulluglify/jessie
